@@ -1,4 +1,4 @@
-@import "@hara-lang/visual-language/tokens.css";
+@import "@hara-lang/ui/theme.css";
 
 :root {
   --learn-on-signal: #fff;

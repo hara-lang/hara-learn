@@ -3,14 +3,9 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const read = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
-const acceptedRevision = "a2ab66d0fde79edb1cee46b79528098b3fda68cf";
-
-test("Learn pins the accepted merged visual-language revision", async () => {
+test("Learn consumes the independently packaged Hara UI shell", async () => {
   const packageJson = JSON.parse(await read("package.json"));
-  assert.equal(
-    packageJson.dependencies["@hara-lang/visual-language"],
-    `github:hara-lang/visual-language#${acceptedRevision}`
-  );
+  assert.equal(packageJson.dependencies["@hara-lang/ui"], "file:../../technology/hara-ui");
 });
 
 test("SiteLayout consumes the shared v2 shell, header and context navigation", async () => {
@@ -19,7 +14,7 @@ test("SiteLayout consumes the shared v2 shell, header and context navigation", a
     "astro/v2/Shell.astro",
     "astro/v2/Header.astro",
     "astro/v2/ContextNav.astro",
-    "@hara-lang/visual-language/v2.css"
+    "@hara-lang/ui/v2.css"
   ]) assert.match(layout, new RegExp(value.replaceAll(".", "\\.")));
   assert.match(layout, /body class="hara-v2 learn-product"/);
   assert.match(layout, /section="Learn"/);

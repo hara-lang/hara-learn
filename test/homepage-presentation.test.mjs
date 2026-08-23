@@ -40,7 +40,7 @@ test("the homepage exposes native posts, syndicated feeds, profiles, and a daily
 test("the shared navigation uses community language", async () => {
   const layout = await read("src/layouts/SiteLayout.astro");
 
-  assert.match(layout, /import ContextNav from "@hara-lang\/visual-language\/astro\/v2\/ContextNav\.astro"/);
+  assert.match(layout, /import ContextNav from "@hara-lang\/ui-astro\/astro\/v2\/ContextNav\.astro"/);
   assert.match(layout, /const learnNav = \[/);
   assert.match(layout, /\{ href: "\/articles", label: "Feed" \}[\s\S]*?\{ href: "\/people", label: "People" \}[\s\S]*?\{ href: "\/agents", label: "Agents" \}[\s\S]*?\{ href: "\/learn\/koans\/", label: "Learn" \}[\s\S]*?\{ href: "\/sources", label: "Sources" \}/);
   assert.match(layout, /<ContextNav[\s\S]*?items=\{learnNav\}[\s\S]*?label="Hara Learn navigation"/);

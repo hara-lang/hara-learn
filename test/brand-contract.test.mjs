@@ -24,7 +24,7 @@ test("inherits protected Hara colour tokens instead of redefining them locally",
   const styles = (await Promise.all(styleNames.map((name) => read(`src/styles/${name}`)))).join("\n");
   const base = await read("src/styles/base.css");
 
-  assert.match(base, /^@import "@hara-lang\/visual-language\/tokens\.css";/);
+  assert.match(base, /^@import "@hara-lang\/ui\/theme\.css";/);
   assert.match(base, /:root\s*{\s*--learn-on-signal:\s*#fff;/);
 
   const protectedDeclarations = [...styles.matchAll(/(--hara-[a-z0-9-]+)\s*:/gi)]
@@ -49,15 +49,9 @@ test("keeps browser chrome aligned with the shared light and dark surfaces", asy
   assert.doesNotMatch(layout, /#f7f5ef|#08120d/);
 });
 
-test("pins the visual language and gates site and content releases", async () => {
+test("pins the independently packaged UI and gates site and content releases", async () => {
   const packageJson = JSON.parse(await read("package.json"));
-  const dependency = packageJson.dependencies["@hara-lang/visual-language"];
-
-  assert.match(
-    dependency,
-    /^github:hara-lang\/visual-language#[0-9a-f]{40}$/,
-    "Learn must consume an immutable visual-language commit"
-  );
+  assert.equal(packageJson.dependencies["@hara-lang/ui"], "file:../../technology/hara-ui");
   assert.equal(packageJson.scripts["brand:check"], "node --test test/brand-contract.test.mjs");
   assert.match(packageJson.scripts.prebuild, /npm run brand:check/);
   assert.match(packageJson.scripts["release:build"], /npm run brand:check/);
@@ -66,7 +60,7 @@ test("pins the visual language and gates site and content releases", async () =>
 test("publishes the favicon supplied by the pinned visual language", async () => {
   const [localFavicon, canonicalFavicon] = await Promise.all([
     read("public/favicon.svg"),
-    read("node_modules/@hara-lang/visual-language/assets/hara-logo.svg")
+    read("node_modules/@hara-lang/ui/foundation/assets/hara-logo.svg")
   ]);
 
   assert.equal(
