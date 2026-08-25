@@ -85,7 +85,14 @@ const learnNav = [
   </head>
   <body class="hara-v2 learn-product">
     <a class="skip-link" href="#content">Skip to content</a>
-    <Shell sidebar={false} aside={false} mainId="content" class="learn-v2-shell">
+    <Shell
+      sidebar={false}
+      aside={false}
+      variant="product"
+      mainId="content"
+      class="learn-v2-shell"
+      style="--hara-v2-page: clamp(16px, 3vw, 44px);"
+    >
       <Header
         slot="header"
         homeHref={SITE.home}
