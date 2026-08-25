@@ -8,5 +8,10 @@ export default defineConfig({
   trailingSlash: "never",
   build: { format: "directory" },
   markdown: { rehypePlugins: [safeCommunityMarkdown] },
-  integrations: [sitemap()]
+  integrations: [sitemap()],
+  vite: {
+    resolve: {
+      preserveSymlinks: true
+    }
+  }
 });
