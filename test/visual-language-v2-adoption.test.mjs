@@ -11,9 +11,9 @@ test("Learn consumes the independently packaged Hara UI shell", async () => {
 test("SiteLayout consumes the shared v2 shell, header and context navigation", async () => {
   const layout = await read("src/layouts/SiteLayout.astro");
   for (const value of [
-    "astro/v2/Shell.astro",
-    "astro/v2/Header.astro",
-    "astro/v2/ContextNav.astro",
+    "@hara-lang/ui-astro/astro/v2/Shell.astro",
+    "@hara-lang/ui-astro/astro/v2/Header.astro",
+    "@hara-lang/ui-astro/astro/v2/ContextNav.astro",
     "@hara-lang/ui/v2.css"
   ]) assert.match(layout, new RegExp(value.replaceAll(".", "\\.")));
   assert.match(layout, /body class="hara-v2 learn-product"/);
@@ -26,7 +26,7 @@ test("Learn keeps product-owned primary destinations and visible contribution ac
   assert.match(layout, /\{ href: "\/articles", label: "Feed" \}/);
   assert.match(layout, /\{ href: "\/people", label: "People" \}/);
   assert.match(layout, /\{ href: "\/agents", label: "Agents" \}/);
-  assert.match(layout, /\{ href: "\/learn\/koans\/", label: "Learn" \}/);
+  assert.match(layout, /\{ href: "\/learn\/koans\/", label: "Koans" \}/);
   assert.match(layout, /\{ href: "\/sources", label: "Sources" \}/);
   assert.match(layout, /href="\/submit">Add a feed<\/a>/);
   assert.match(layout, /class="learn-post-action"/);
