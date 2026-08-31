@@ -151,7 +151,8 @@ export function safeLocalReturnTo(value, requestUrl) {
 }
 
 export function readLearnAuthConfig(env = {}, requestUrl = "https://learn.hara-lang.org/") {
-  const handoffSecret = envValue(env, "HARA_LEARN_HANDOFF_SECRET");
+  const handoffSecret = envValue(env, "HARA_IDENTITY_HANDOFF_SECRET")
+    || envValue(env, "HARA_LEARN_HANDOFF_SECRET");
   const sessionSecret = envValue(env, "HARA_LEARN_SESSION_SECRET");
   if (handoffSecret.length < 32 || sessionSecret.length < 32) {
     throw new Error("Hara Learn authentication is not configured.");

@@ -38,7 +38,8 @@ Merge remains the publication event. The profile service never writes directly t
 
 ```text
 DATABASE_URL
-HARA_LEARN_HANDOFF_SECRET
+HARA_IDENTITY_HANDOFF_SECRET
+# HARA_LEARN_HANDOFF_SECRET is a temporary fallback during the Identity client-name migration.
 HARA_LEARN_SESSION_SECRET
 HARA_LEARN_GITHUB_APP_ID
 HARA_LEARN_GITHUB_APP_PRIVATE_KEY
@@ -53,6 +54,6 @@ HARA_LEARN_GITHUB_REPOSITORY=hara-lang/hara-learn
 HARA_LEARN_GITHUB_BASE_BRANCH=main
 ```
 
-Use different handoff and session secrets in testing and production. The Learn GitHub App needs only repository metadata read, contents read/write, and pull requests read/write for `hara-lang/hara-learn`.
+Use different handoff and session secrets in testing and production. Identity uses `HARA_ID_HANDOFF_LEARN_SECRET` for the matching shared handoff value; Learn uses `HARA_IDENTITY_HANDOFF_SECRET`. `HARA_LEARN_HANDOFF_SECRET` is a temporary fallback only. The Learn GitHub App needs only repository metadata read, contents read/write, and pull requests read/write for `hara-lang/hara-learn`.
 
 Run `npm run database:migrate` before enabling authentication. `community_identity_handoffs.handoff_id` is the database replay boundary, while `community_accounts.github_user_id` is the durable account key. GitHub logins are deliberately not unique authority because they can change or be reused.

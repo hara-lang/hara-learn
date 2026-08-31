@@ -73,6 +73,18 @@ test("starts an exact Learn handoff with S256 PKCE and host-only cookies", async
   assert.doesNotMatch(cookies, /Domain=/i);
 });
 
+test("accepts the generic Identity handoff secret name without its Learn-named fallback", async () => {
+  const env = {
+    ...ENV,
+    HARA_IDENTITY_HANDOFF_SECRET: ENV.HARA_LEARN_HANDOFF_SECRET,
+  };
+  delete env.HARA_LEARN_HANDOFF_SECRET;
+
+  const response = await handle(new Request("https://learn.hara-lang.org/api/auth/start?returnTo=%2Fme"), { env, now: NOW });
+  assert.equal(response.status, 302);
+  assert.equal(new URL(response.headers.get("location")).searchParams.get("client_id"), "learn");
+});
+
 test("creates a local session and rechecks that the account remains active", async () => {
   const { callback, sessionCookie } = await establishSession();
   assert.equal(callback.status, 302);

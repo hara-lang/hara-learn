@@ -142,7 +142,8 @@ The existing Learn backend variables are reused:
 
 ```text
 DATABASE_URL
-HARA_LEARN_HANDOFF_SECRET
+HARA_IDENTITY_HANDOFF_SECRET
+# HARA_LEARN_HANDOFF_SECRET is a temporary fallback during the Identity client-name migration.
 HARA_LEARN_SESSION_SECRET
 HARA_LEARN_GITHUB_APP_ID
 HARA_LEARN_GITHUB_APP_PRIVATE_KEY
