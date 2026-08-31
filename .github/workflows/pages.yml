@@ -44,22 +44,22 @@ jobs:
         if: github.ref_name == 'testing'
         run: npx --yes netlify-cli deploy --build --prod --message "testing ${GITHUB_SHA}"
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_TESTING_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.HARA_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.HARA_LEARN_NETLIFY_TESTING_SITE_ID }}
 
       - name: Deploy main to learn.hara-lang.org
         if: github.ref_name == 'main'
         run: npx --yes netlify-cli deploy --build --prod --message "main ${GITHUB_SHA}"
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_PRODUCTION_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.HARA_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.HARA_LEARN_NETLIFY_PRODUCTION_SITE_ID }}
 
       - name: Reconcile learn.testing.hara-lang.org
         if: github.ref_name == 'testing'
         run: bash .github/scripts/reconcile-netlify-domain.sh
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_TESTING_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.HARA_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.HARA_LEARN_NETLIFY_TESTING_SITE_ID }}
           NETLIFY_CUSTOM_DOMAIN: learn.testing.hara-lang.org
           NETLIFY_LEGACY_DOMAIN: world.testing.hara-lang.org
 
@@ -67,8 +67,8 @@ jobs:
         if: github.ref_name == 'main'
         run: bash .github/scripts/reconcile-netlify-domain.sh
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_PRODUCTION_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.HARA_NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.HARA_LEARN_NETLIFY_PRODUCTION_SITE_ID }}
           NETLIFY_CUSTOM_DOMAIN: learn.hara-lang.org
           NETLIFY_LEGACY_DOMAIN: world.hara-lang.org
 

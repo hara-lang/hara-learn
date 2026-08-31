@@ -109,29 +109,29 @@ jobs:
       - name: Create Buttondown draft
         if: inputs.publish_buttondown
         env:
-          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          BUTTONDOWN_API_KEY: ${{ secrets.HARA_LEARN_BUTTONDOWN_API_KEY }}
         run: npm run publish:buttondown -- --release="$RELEASE_DIR" --publish
       - name: Publish to Bluesky
         if: inputs.publish_bluesky
         env:
-          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
-          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
-          BLUESKY_SERVICE_URL: ${{ vars.BLUESKY_SERVICE_URL }}
+          BLUESKY_HANDLE: ${{ secrets.HARA_LEARN_BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.HARA_LEARN_BLUESKY_APP_PASSWORD }}
+          BLUESKY_SERVICE_URL: ${{ vars.HARA_LEARN_BLUESKY_SERVICE_URL }}
         run: npm run publish:bluesky -- --release="$RELEASE_DIR" --publish
       - name: Publish to Mastodon
         if: inputs.publish_mastodon
         env:
-          MASTODON_BASE_URL: ${{ secrets.MASTODON_BASE_URL }}
-          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
-          MASTODON_VISIBILITY: ${{ vars.MASTODON_VISIBILITY }}
+          MASTODON_BASE_URL: ${{ secrets.HARA_LEARN_MASTODON_BASE_URL }}
+          MASTODON_ACCESS_TOKEN: ${{ secrets.HARA_LEARN_MASTODON_ACCESS_TOKEN }}
+          MASTODON_VISIBILITY: ${{ vars.HARA_LEARN_MASTODON_VISIBILITY }}
         run: npm run publish:mastodon -- --release="$RELEASE_DIR" --publish
       - name: Upload privately to YouTube
         if: inputs.upload_youtube
         env:
-          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
-          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
-          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_PRIVACY_STATUS: ${{ vars.YOUTUBE_PRIVACY_STATUS }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.HARA_LEARN_YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.HARA_LEARN_YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.HARA_LEARN_YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_PRIVACY_STATUS: ${{ vars.HARA_LEARN_YOUTUBE_PRIVACY_STATUS }}
         run: npm run publish:youtube -- --release="$RELEASE_DIR" --publish
       - name: Queue managed social projections
         if: inputs.queue_managed_social
