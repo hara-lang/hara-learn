@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: hara-lang/visual-language
-          ref: a2ab66d0fde79edb1cee46b79528098b3fda68cf
+          ref: 6d98f744fb6efc706e0ca3ba9119aa4ef5941b3a
           path: visual-language
       - name: Expose shared UI package for npm file dependencies
         run: |
