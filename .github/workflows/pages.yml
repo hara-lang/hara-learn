@@ -35,6 +35,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Checkout shared Hara UI package
+        uses: actions/checkout@v4
+        with:
+          repository: hara-lang/hara-ui
+          ref: main
+          path: technology/hara-ui
+      - name: Expose shared UI package for npm file dependencies
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/../../technology"
+          ln -sfn "$GITHUB_WORKSPACE/technology/hara-ui" "$GITHUB_WORKSPACE/../../technology/hara-ui"
       - name: Install dependencies
         run: npm install
       - name: Validate publication and functions
