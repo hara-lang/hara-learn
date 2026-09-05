@@ -30,27 +30,23 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: workspace/website/hara-learn
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Learn
+        uses: actions/checkout@v4
         with:
-          node-version: 24
-      - name: Checkout shared Hara UI package
+          path: workspace/website/hara-learn
+      - name: Checkout pinned Hara UI workspace dependency
         uses: actions/checkout@v4
         with:
           repository: hara-lang/hara-ui
-          ref: main
-          path: technology/hara-ui
-      - name: Checkout pinned visual language package
-        uses: actions/checkout@v4
+          ref: 31c1b0f9685125f81564e11f26dd920d079ec1ea
+          path: workspace/technology/hara-ui
+      - uses: actions/setup-node@v4
         with:
-          repository: hara-lang/visual-language
-          ref: 6d98f744fb6efc706e0ca3ba9119aa4ef5941b3a
-          path: visual-language
-      - name: Expose shared UI package for npm file dependencies
-        run: |
-          mkdir -p "$GITHUB_WORKSPACE/../../technology"
-          ln -sfn "$GITHUB_WORKSPACE/technology/hara-ui" "$GITHUB_WORKSPACE/../../technology/hara-ui"
+          node-version: 24
       - name: Install dependencies
         run: npm install
       - name: Validate publication and functions

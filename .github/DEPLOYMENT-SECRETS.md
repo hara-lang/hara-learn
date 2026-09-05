@@ -1,22 +1,48 @@
 # Hara Learn deployment credentials
 
-The GitHub Actions deployment workflow requires repository secrets:
+GitHub Actions is the only deployment authority. The workflow requires one
+repository secret and two repository variables:
 
 ```text
-NETLIFY_AUTH_TOKEN
-NETLIFY_TESTING_SITE_ID
-NETLIFY_PRODUCTION_SITE_ID
+secret: HARA_NETLIFY_AUTH_TOKEN
+variable: HARA_LEARN_NETLIFY_TESTING_SITE_ID
+variable: HARA_LEARN_NETLIFY_PRODUCTION_SITE_ID
 ```
 
-`NETLIFY_AUTH_TOKEN` must be a Netlify personal access token or equivalent credential with permission to deploy both Learn projects. It must be stored as a GitHub Actions secret and never committed to source control.
+`HARA_NETLIFY_AUTH_TOKEN` must be a Netlify personal access token or equivalent
+credential with permission to deploy both Learn projects. It is stored only as a
+GitHub Actions secret and is bound to the provider-native `NETLIFY_AUTH_TOKEN`
+name only for the deploy command. It is never a Netlify Function runtime value.
 
-Testing site ID:
+The two site IDs are non-secret identifiers held as GitHub Actions variables;
+the workflow selects them by branch:
 
 ```text
-13d913c8-553b-4c1b-8de9-8ace2ff35d5e
+testing branch -> HARA_LEARN_NETLIFY_TESTING_SITE_ID
+main branch    -> HARA_LEARN_NETLIFY_PRODUCTION_SITE_ID
 ```
 
 Production must use a separate Netlify project and its own site ID.
+
+## Function runtime boundary
+
+Netlify Functions do not inherit GitHub Actions secrets. Runtime values are
+configured directly at the declared Netlify site and `production` context:
+
+```text
+DATABASE_URL
+HARA_IDENTITY_HANDOFF_SECRET
+HARA_LEARN_SESSION_SECRET
+HARA_LEARN_GITHUB_APP_ID
+HARA_LEARN_GITHUB_APP_PRIVATE_KEY
+HARA_LEARN_GITHUB_INSTALLATION_ID
+HARA_LEARN_GITHUB_WEBHOOK_SECRET
+```
+
+Testing and production use different database, handoff/session, GitHub App,
+and webhook values. The deployment workflow must be rerun through GitHub after
+a runtime update so the new Function configuration is active. Do not sync a
+GitHub deployment credential into Netlify as a runtime variable.
 
 ## Proposal lifecycle deployment
 
